@@ -1,0 +1,28 @@
+{
+  "routerMap": [
+    {
+      "name": "ecy://entry/loading",
+      "pageSourceFile": "src/main/ets/pages/LoadingPage.ets",
+      "buildFunction": "LoadingPageBuilder",
+      "data": {
+        "description": "启动页"
+      }
+    },
+    {
+      "name": "ecy://entry/main",
+      "pageSourceFile": "src/main/ets/pages/MainPage.ets",
+      "buildFunction": "MainPageBuilder",
+      "data": {
+        "description": "主页"
+      }
+    },
+    {
+      "name": "ecy://entry/login",
+      "pageSourceFile": "src/main/ets/pages/LoginPage.ets",
+      "buildFunction": "LoginPageBuilder",
+      "data": {
+        "description": "登录页"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "routerMap": [
+    {
+      "name": "ecy://common/city",
+      "pageSourceFile": "src/main/ets/functions/city/CityPickerPage.ets",
+      "buildFunction": "CityPickerPageBuilder",
+      "data": {
+        "description": "城市选择"
+      }
+    },
+    {
+      "name": "ecy://common/web",
+      "pageSourceFile": "src/main/ets/functions/webview/pages/WebViewPage.ets",
+      "buildFunction": "WebViewPageBuilder",
+      "data": {
+        "description": "web"
+      }
+    }
+  ]
+}

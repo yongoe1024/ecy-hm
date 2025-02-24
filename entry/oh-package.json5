@@ -1,0 +1,14 @@
+{
+  "name": "entry",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "common": "file:../common",
+    "mine": "file:../features/mine"
+  },
+  "devDependencies": {},
+  "dynamicDependencies": {}
+}
