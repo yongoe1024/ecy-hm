@@ -1,5 +1,6 @@
 import { AppStorageName, GlobalStyle, RouteManager, UploadFile } from "common"
 import { MinePage } from "mine"
+import { router } from "@kit.ArkUI"
 
 @Builder
 export function MainPageBuilder() {
@@ -38,6 +39,11 @@ export struct MainPage {
         TabContent() {
           Column() {
             Text('页面')
+              .onClick(()=>{
+                router.pushUrl({
+                  url:'pages/DemoMulti'
+                })
+              })
           }
         }
 

@@ -1,5 +1,5 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
-import { KeyboardAvoidMode, window } from '@kit.ArkUI';
+import { window } from '@kit.ArkUI';
 import { webview } from '@kit.ArkWeb';
 import { IBestInit } from '@ibestservices/ibest-ui';
 import { AppStorageName } from 'common';
@@ -30,11 +30,40 @@ export default class EntryAbility extends UIAbility {
       // 初始化UI组件库
       IBestInit(windowStage, this.context)
       const windowClass = windowStage.getMainWindowSync()
-      // 设置键盘压缩模式
-       //windowClass.getUIContext().setKeyboardAvoidMode(KeyboardAvoidMode.RESIZE)
       this.updateWinInfo(windowClass)
+
     });
   }
+
+  /**
+   * 断点更新
+   */
+  updateBreakpoint(width: number, height: number) {
+    let widthBp: string = '';
+    let heightBp: string = '';
+    let aspectRatio: number = height / width;
+    if (width < 320) {
+      widthBp = 'xs';
+    } else if (width >= 320 && width < 600) {
+      widthBp = 'sm';
+    } else if (width >= 600 && width < 840) {
+      widthBp = 'md';
+    } else if (width >= 840 && width < 1440) {
+      widthBp = 'lg';
+    } else {
+      widthBp = 'xl';
+    }
+    AppStorage.setOrCreate('currentWidthBreakpoint', widthBp);
+    if (aspectRatio < 0.8) {
+      heightBp = 'sm';
+    } else if (aspectRatio >= 0.8 && aspectRatio < 1.2) {
+      heightBp = 'md';
+    } else {
+      heightBp = 'lg';
+    }
+    AppStorage.setOrCreate('currentHeightBreakpoint', heightBp);
+  }
+
 
   /**
    * 存储窗口高度
@@ -72,8 +101,11 @@ export default class EntryAbility extends UIAbility {
     // 4. 注册监听函数，监听窗口大小变化
     try {
       windowClass.on('windowSizeChange', (data) => {
-        AppStorage.setOrCreate('windowWidth', px2vp(data.width))
-        AppStorage.setOrCreate('windowHeight', px2vp(data.height))
+        let windowWidthVp = px2vp(data.width)
+        let windowHeightVp = px2vp(data.height)
+        AppStorage.setOrCreate('windowWidth', windowWidthVp)
+        AppStorage.setOrCreate('windowHeight', windowHeightVp)
+        this.updateBreakpoint(windowWidthVp, windowHeightVp)
       });
     } catch (exception) {
       console.error(`Failed to enable the listener for window size changes. Cause code: ${exception.code}, message: ${exception.message}`);
