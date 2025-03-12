@@ -1,10 +1,14 @@
 /**
  * 城市
  */
-export class CityItemModel {
+export class CityItemModel{
+  // 省份
   provinceName?: string;
+  // 省份编码
   provinceCode?: string;
+  // 城市
   cityName?: string;
+  // 城市编码
   cityCode?: string;
 }
 

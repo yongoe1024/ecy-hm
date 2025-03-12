@@ -1,6 +1,8 @@
 {
   "src": [
     "pages/Index",
-    "pages/DemoMulti"
+    "pages/DemoMulti",
+    "pages/DemoXX",
+    "pages/ListPage"
   ]
 }

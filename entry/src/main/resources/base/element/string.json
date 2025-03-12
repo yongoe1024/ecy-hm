@@ -11,6 +11,14 @@
     {
       "name": "EntryAbility_label",
       "value": "ECY框架"
+    },
+    {
+      "name": "entry_location_reason",
+      "value": "请求定位权限"
+    },
+    {
+      "name": "entry_camera_reason",
+      "value": "请求摄像头，用于拍照、扫码功能"
     }
   ]
 }

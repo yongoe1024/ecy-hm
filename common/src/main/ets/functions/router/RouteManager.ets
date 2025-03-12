@@ -4,7 +4,7 @@ import { RouteTable } from "./RouteTable";
 import Url from '@ohos.url'
 
 /**
- * 路由
+ * 路由管理类
  */
 export class RouteManager {
   private static instance?: RouteManager
@@ -55,6 +55,9 @@ export class RouteManager {
     this.currentNavStack?.pop(result, animated)
   }
 
+  /**
+   * 跳转
+   */
   public push(pagePath: string, options?: RouterParams) {
     if (!pagePath) {
       return

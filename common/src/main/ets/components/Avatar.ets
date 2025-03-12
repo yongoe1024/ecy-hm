@@ -3,12 +3,12 @@
  * @author yongoe
  * @since 2024/9/8
  */
-@Component
+@ComponentV2
 export struct Avatar {
-  @Prop src: ResourceStr = ''
-  avatarSize: number = 20
-  radius: number = 0
-  onclick: () => void = () => {
+  @Param src: ResourceStr = ''
+  @Param avatarSize: number = 20
+  @Param radius: number = 0
+  @Param onclick: () => void = () => {
   }
 
   build() {

@@ -25,11 +25,7 @@ export struct CityPickerPage {
       Column() {
 
       }
-      .alignItems(HorizontalAlign.Start)
-      .margin({ top: this.topRectHeight + 10, bottom: this.bottomRectHeight })
     }
-    .hideTitleBar(true)
-    .mode(NavDestinationMode.STANDARD)
     .attributeModifier(GlobalStyle.navModifier)
   }
 }

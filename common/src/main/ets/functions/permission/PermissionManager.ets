@@ -1,7 +1,9 @@
 import { IBestDialogUtil } from '@ibestservices/ibest-ui'
 import { abilityAccessCtrl, bundleManager, common, Permissions } from '@kit.AbilityKit'
 
-
+/**
+ * 权限管理类
+ */
 export class PermissionManager {
   /**
    * 获取权限，失败弹窗跳转设置页
@@ -9,36 +11,35 @@ export class PermissionManager {
    * @param failStr 跳转提示信息
    * @returns 成功失败
    */
-  static requestPermissions(permissions: Permissions[], failStr: string): boolean {
+  public static async requestPermissions(permissions: Permissions[], failStr: string): Promise<boolean> {
     const not: Permissions[] = PermissionManager.check(permissions)
     if (not.length == 0) {
       return true
     }
-    PermissionManager.request(not)
-      .then(res => {
-        if (res) {
-          return
-        }
-        IBestDialogUtil.open({
-          title: "提示",
-          message: failStr,
-          showCancelButton: true,
-          confirmButtonText: '前往设置',
-          onConfirm: () => {
-            const context = getContext() as common.UIAbilityContext
-            const appInfo =
-              bundleManager.getBundleInfoForSelfSync(bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION)
-            context.startAbility({
-              bundleName: "com.huawei.hmos.settings", //设置也的包名
-              abilityName: "com.huawei.hmos.settings.MainAbility",
-              uri: "application_info_entry", //参数名
-              parameters: {
-                pushParams: appInfo.name
-              }
-            })
+    let res = await PermissionManager.request(not)
+    if (res) {
+      return true
+    }
+    IBestDialogUtil.open({
+      title: "提示",
+      dialogBorderRadius:0,
+      message: failStr,
+      showCancelButton: true,
+      confirmButtonText: '前往设置',
+      onConfirm: () => {
+        const context = getContext() as common.UIAbilityContext
+        const appInfo =
+          bundleManager.getBundleInfoForSelfSync(bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION)
+        context.startAbility({
+          bundleName: "com.huawei.hmos.settings", //设置的包名
+          abilityName: "com.huawei.hmos.settings.MainAbility",
+          uri: "application_info_entry", //参数名
+          parameters: {
+            pushParams: appInfo.name
           }
         })
-      })
+      }
+    })
     return false
   }
 

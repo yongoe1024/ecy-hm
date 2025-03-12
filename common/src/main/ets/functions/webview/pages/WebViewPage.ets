@@ -1,3 +1,5 @@
+import { GlobalStyle } from "../../../globalStyle"
+
 @Builder
 export function WebViewPageBuilder() {
   WebViewPage()
@@ -9,13 +11,12 @@ export function WebViewPageBuilder() {
 @Component
 export struct WebViewPage {
   build() {
-    Column() {
-      Text('WebViewPage')
+    NavDestination() {
+      Column() {
 
+      }
     }
-    .width('100%')
-    .height('100%')
-
+    .attributeModifier(GlobalStyle.navModifier)
   }
 }
 

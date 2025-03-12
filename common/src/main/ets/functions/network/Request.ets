@@ -4,7 +4,7 @@
  * @since 2024/8/23
  */
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, FormData, InternalAxiosRequestConfig } from '@ohos/axios'
-import { AppStorageName, Constants } from '../../constants'
+import { AppStorageName, CommonConstants } from '../../constants'
 import { ResponseModel } from './RequestModel'
 import { Logger } from '../../utils/Logger'
 import { IBestToast } from '@ibestservices/ibest-ui'
@@ -12,14 +12,14 @@ import { RouteManager } from '../router/RouteManager'
 import { RouteTable } from '../router/RouteTable'
 
 const instance = axios.create({
-  baseURL: Constants.BASE_URL
+  baseURL: CommonConstants.BASE_URL
 })
 
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = AppStorage.get<string>(AppStorageName.TOKEN)
     if (token) {
-      config.headers[Constants.TOKEN_HEADER] = token
+      config.headers[CommonConstants.TOKEN_HEADER] = token
     }
     return config
   }
@@ -63,11 +63,18 @@ instance.interceptors.response.use(
 )
 
 class Request {
+
+  /**
+   * 自定义请求
+   */
+  request<T = ESObject>(config: AxiosRequestConfig) {
+    return instance.request<T, T>(config)
+  }
   /**
    * @param url 路径
    * @param params 路径传参对象
    */
-  get<T>(url: string, params?: ESObject) {
+  get<T = ESObject>(url: string, params?: ESObject) {
     return instance.get<T, T>(url, { params })
   }
 
@@ -76,16 +83,8 @@ class Request {
    * @param data post参数对象
    * @param params 路径传参对象
    */
-  post<T>(url: string, data?: ESObject, params?: Record<string, object>) {
+  post<T = ESObject>(url: string, data?: ESObject, params?: Record<string, ESObject>) {
     return instance.post<T, T>(url, data, { params })
-  }
-
-  // postFile<T>(url: string, data: FormData, config: AxiosRequestConfig) {
-  //   return instance.post<T, T>(url, data, config)
-  // }
-
-  request<T>(config: AxiosRequestConfig) {
-    return instance.request<T, T>(config)
   }
 
   /**
@@ -93,7 +92,7 @@ class Request {
    * @param data post参数对象
    * @param params 路径传参对象
    */
-  put<T>(url: string, data?: ESObject, params?: Record<string, object>) {
+  put<T = ESObject>(url: string, data?: ESObject, params?: Record<string, ESObject>) {
     return instance.put<T, T>(url, data, { params })
   }
 
@@ -101,7 +100,7 @@ class Request {
    * @param url 路径
    * @param params 路径传参对象
    */
-  delete<T>(url: string, params?: Record<string, object>) {
+  delete<T = ESObject>(url: string, params?: Record<string, ESObject>) {
     return instance.delete<T, T>(url, { params })
   }
 }

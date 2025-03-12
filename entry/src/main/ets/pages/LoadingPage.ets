@@ -1,4 +1,6 @@
-import { Constants, GlobalStyle, PreferenceManager, RouteManager, RouterParams, RouteTable } from "common";
+import { CommonConstants, GlobalStyle, PreferenceManager,
+  PreferenceName,
+  RouteManager, RouterParams, RouteTable } from "common";
 import { SplashPrivacyDialog } from "../components/SplashPrivacyDialog";
 import { common } from "@kit.AbilityKit";
 import { Advert } from "../components/Advert";
@@ -26,7 +28,7 @@ export struct LoadingPage {
       },
       confirm: () => {
         this.splashPrivacyController.close()
-        PreferenceManager.getInstance().putSync(Constants.IS_AGREE_PRIVACY, true)
+        PreferenceManager.getInstance().putSync(PreferenceName.IS_AGREE_PRIVACY, true)
         this.initApp()
       },
     }),
@@ -42,7 +44,7 @@ export struct LoadingPage {
       let params = new RouterParams()
       params.animated = false
       RouteManager.getInstance().push(RouteTable.ENTRY_INDEX, params)
-    }, 1000)
+    }, 1)
   }
 
   build() {
@@ -56,7 +58,7 @@ export struct LoadingPage {
     .attributeModifier(GlobalStyle.navModifier)
     .onReady((context: NavDestinationContext) => {
       // 显示协议弹窗
-      const result = PreferenceManager.getInstance().getSync<boolean>(Constants.IS_AGREE_PRIVACY)
+      const result = PreferenceManager.getInstance().getSync<boolean>(PreferenceName.IS_AGREE_PRIVACY)
       if (result) {
         this.initApp()
       } else {

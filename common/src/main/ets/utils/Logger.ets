@@ -1,9 +1,12 @@
 import { hilog } from '@kit.PerformanceAnalysisKit';
 
+/**
+ * 日志
+ **/
 export class Logger {
   private static domain: number = 0xFF00;
-  private static prefix: string = 'PiPi';
-  private static format: string = '%{public}s, %{public}s';
+  private static prefix: string = 'ECY';
+  private static format: string = '%{public}s';
 
   static debug(...args: string[]): void {
     hilog.debug(Logger.domain, Logger.prefix, Logger.format, args);

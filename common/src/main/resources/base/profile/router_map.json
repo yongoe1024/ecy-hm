@@ -15,6 +15,22 @@
       "data": {
         "description": "web"
       }
+    },
+    {
+      "name": "ecy://common/img_preview",
+      "pageSourceFile": "src/main/ets/functions/image/ImgPreviewPage.ets",
+      "buildFunction": "ImgPreviewPageBuilder",
+      "data": {
+        "description": "图片预览"
+      }
+    },
+    {
+      "name": "ecy://common/img_crop",
+      "pageSourceFile": "src/main/ets/functions/image/ImgCropPage.ets",
+      "buildFunction": "ImgCropPageBuilder",
+      "data": {
+        "description": "图片裁剪"
+      }
     }
   ]
 }

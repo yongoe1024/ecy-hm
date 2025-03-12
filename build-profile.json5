@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/yongoe/.ohos/config/default_ecy_hm_A2EOY-QzRCR-ZcVh9q33eTGAlrEEBkxcy8gqr4D9peI=.cer",
+          "storePassword": "0000001BD6100420827D16951AF02E03060250601C8E81AD64326D5DAD007B145972A463973ED2FE548A27",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BF15DB0ED6EDB24F238ABA3BCA4460C6E898A9247BA9D38C4D6A2E8971C3D06012C566DCAFD118A",
+          "profile": "/Users/yongoe/.ohos/config/default_ecy_hm_A2EOY-QzRCR-ZcVh9q33eTGAlrEEBkxcy8gqr4D9peI=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/yongoe/.ohos/config/default_ecy_hm_A2EOY-QzRCR-ZcVh9q33eTGAlrEEBkxcy8gqr4D9peI=.p12"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",

@@ -35,7 +35,6 @@ struct Index {
   build() {
     Navigation(this.pageStack) {
     }
-    .padding({ top: this.topRectHeight, bottom: this.bottomRectHeight })
     .hideTitleBar(true)
     .hideToolBar(true)
     .hideNavBar(true)

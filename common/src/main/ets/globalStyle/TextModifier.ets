@@ -1,7 +1,6 @@
-export enum AudiTextStyle {
-  STYLE_BIG, STYLE_NORMAL, STYLE_SMALL
-}
-
+/**
+ * Text 按钮样式
+ */
 export class TextOneModifier implements AttributeModifier<TextAttribute> {
   private level: number
 

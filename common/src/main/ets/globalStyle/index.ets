@@ -4,6 +4,7 @@ import { TextOneModifier, TextThreeModifier, TextTwoModifier } from "./TextModif
 
 export class GlobalStyle {
   static navModifier = new NavDesModifier()
+
   static textModifier = (size: 'big' | 'normal' | 'small', type: 1 | 2 | 3) => {
     let sizeNum: 1 | 2 | 3 = size == 'big' ? 1 : size == 'normal' ? 2 : 3
     if (type == 1) {

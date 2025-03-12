@@ -1,3 +1,6 @@
+/**
+ * AppStorage name
+ */
 export class AppStorageName {
   // 用户数据
   static readonly USER = "user"
@@ -9,10 +12,15 @@ export class AppStorageName {
   static readonly NavPathStack = "NavPathStack"
   // windowStage
   static readonly WINDOW_STAGE = "windowStage"
+  // 顶部安全区
   static readonly topRectHeight = "topRectHeight"
+  // 底部安全区
   static readonly bottomRectHeight = "bottomRectHeight"
+  // 屏幕宽度
   static readonly windowWidth = "windowWidth"
+  // 屏幕高度
   static readonly windowHeight = "windowHeight"
+  // 键盘高度
   static readonly keyboardHeight = "keyboardHeight"
 }
 

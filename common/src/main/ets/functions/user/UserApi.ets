@@ -1,8 +1,11 @@
 import { UserModel } from "./.."
 import { AppStorageName } from "../../constants/AppStorageName"
-import { Constants } from "../../constants/Constants"
-import { request } from "../netWork/Request"
+import { CommonConstants } from "../../constants/CommonConstants"
+import { request } from "../network/Request"
 
+/**
+ * 用户接口
+ */
 class UserApi {
   /**
    * 登录并存储token到AppStorage
@@ -18,7 +21,7 @@ class UserApi {
   async getUserInfo() {
     const user = await request.post<UserModel>('/user/info')
     // 仅仅是后端没IP
-    user.avatar = Constants.BASE_URL + user.avatar
+    user.avatar = CommonConstants.BASE_URL + user.avatar
     AppStorage.setOrCreate(AppStorageName.USER, user)
   }
 

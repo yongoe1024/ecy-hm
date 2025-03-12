@@ -22,13 +22,25 @@
         "startWindowIcon": "$media:app_icon",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
+        // 标识当前UIAbility组件或ExtensionAbility组件能够接收的Want特征集，为数组格式。
         "skills": [
           {
+            // 入口能力
             "entities": [
-              "entity.system.home"
+              "entity.system.home",
             ],
+            // 入口能力
             "actions": [
-              "action.system.home"
+              "action.system.home",
+              // 查询是否安装app
+              "ohos.want.action.viewData"
+            ],
+            // 自己的uri配置，别人可以查询自己或跳转自己
+            "uris": [
+              {
+                "scheme": "http",
+                "host": "example.com",
+              }
             ]
           }
         ]
@@ -58,16 +70,36 @@
       //      {
       //        "name": "ohos.permission.PRIVACY_WINDOW"
       //      },
-      //      {
-      //        "name": "ohos.permission.LOCATION",
-      //        "reason": "$string:entry_string_request_location_reason",
-      //        "usedScene": {
-      //          "abilities": [
-      //            "EntryAbility"
-      //          ],
-      //          "when": "always"
-      //        }
-      //      },
+      {
+        "name": "ohos.permission.LOCATION",
+        "reason": "$string:entry_location_reason",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "always"
+        }
+      },
+      {
+        "name": "ohos.permission.APPROXIMATELY_LOCATION",
+        "reason": "$string:entry_location_reason",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "always"
+        }
+      },
+      {
+        "name": "ohos.permission.CAMERA",
+        "reason": "$string:entry_camera_reason",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "always"
+        }
+      },
       //      {
       //        "name": "ohos.permission.READ_CONTACTS",
       //        "reason": "$string:entry_string_request_address_book",
@@ -79,15 +111,7 @@
       //        }
       //      },
       //      {
-      //        "name": "ohos.permission.CAMERA",
-      //        "reason": "$string:entry_string_request_camera_reason",
-      //        "usedScene": {
-      //          "abilities": [
-      //            "EntryAbility"
-      //          ],
-      //          "when": "always"
-      //        }
-      //      },
+
       //      {
       //        "name": "ohos.permission.READ_MEDIA",
       //        "reason": "$string:entry_string_request_read_media_reason",
@@ -101,16 +125,6 @@
       //      {
       //        "name": "ohos.permission.WRITE_MEDIA",
       //        "reason": "$string:entry_string_request_write_media_reason",
-      //        "usedScene": {
-      //          "abilities": [
-      //            "EntryAbility"
-      //          ],
-      //          "when": "always"
-      //        }
-      //      },
-      //      {
-      //        "name": "ohos.permission.APPROXIMATELY_LOCATION",
-      //        "reason": "$string:entry_string_request_location_reason",
       //        "usedScene": {
       //          "abilities": [
       //            "EntryAbility"
@@ -149,6 +163,7 @@
       //        }
       //      }
     ],
+    // 查询是否安装 支付宝、高德、百度、微信
     "querySchemes": [
       "alipays",
       "amapuri",
@@ -156,6 +171,15 @@
       "https",
       "weixin"
     ],
+    // agc官网上的client_id，可用于原生功能：地图、推送
+    "metadata": [
+      // 配置信息如下
+      {
+        "name": "client_id",
+        "value": "111601011"
+      }
+    ],
+    // 路由表
     "routerMap": "$profile:router_map"
   }
 }

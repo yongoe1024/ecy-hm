@@ -2,14 +2,13 @@ import { fileIo } from '@kit.CoreFileKit';
 import { util } from '@kit.ArkTS';
 import { AxiosProgressEvent, FormData } from '@ohos/axios';
 import { request } from './Request';
-import { Logger } from '../../utils';
 import { DownloadParams, UploadParams } from '..';
 
 export class UploadFile {
   /**
    * 上传文件
    */
-  static async upload<T = undefined>(params: UploadParams): Promise<T> {
+  static async upload<T = ESObject>(params: UploadParams): Promise<T> {
     if (!params.url || !params.filePath) {
       Promise.reject()
     }
@@ -36,9 +35,9 @@ export class UploadFile {
 
 
   /**
-   * 下载，！仅能下载到cacheDir目录！
+   * 下载，！仅能下载到cacheDir目录！,已存在会下载失败
    */
-  static download<T = undefined>(params: DownloadParams): Promise<T> {
+  static download<T = ESObject>(params: DownloadParams): Promise<T> {
     return request.request<T>({
       url: params.url,
       method: 'get',
