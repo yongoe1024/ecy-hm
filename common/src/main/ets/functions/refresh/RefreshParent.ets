@@ -7,6 +7,8 @@ import {
   RefreshPositionEnum
 } from "@abner/refresh"
 import { RefreshPageReactor, RefreshPageState } from ".."
+import { LoadMoreFooterComponent } from "./LoadMoreFooterComponent"
+import { RefreshHeaderComponent } from "./RefreshHeaderComponent"
 
 /**
  * 分页刷新 嵌套父组件
@@ -23,18 +25,9 @@ export struct RefreshParent {
   // 加载更多
   @State enableLoadMore: boolean = true
 
-  // @State @Watch('aa') pageState: RefreshPageState = new RefreshPageState(1, 10)
-
-  // aa(){
-  //   console.log(JSON.stringify(this.aa))
-  // }
 
   @Builder
   nullBuilder() {
-  }
-
-  aboutToAppear(): void {
-    // this.pageState = this.childReactor.pageState
   }
 
   /**
@@ -44,26 +37,19 @@ export struct RefreshParent {
   itemLayout: () => void = this.nullBuilder
 
   /**
-   * 自定义下拉刷新 备用
+   * 自定义下拉刷新
    */
   @Builder
   refreshHeader(status: RefreshLayoutStatusModel) {
-    LoadingProgress()
+    RefreshHeaderComponent({ status: status.status })
   }
 
   /**
-   * 自定义加载更多 备用
+   * 自定义加载更多
    */
   @Builder
   loadMoreFooter(status: LoadMoreLayoutStatusModel) {
-    if (status.status !== LoadMoreLayoutStatus.FooterNothing) {
-      LoadingProgress().width(80).height(80)
-    } else {
-      Text('没有更多了')
-        .fontColor('#999')
-        .fontSize(12)
-        .height(64)
-    }
+    LoadMoreFooterComponent({ status: status.status })
   }
 
   build() {
@@ -78,8 +64,8 @@ export struct RefreshParent {
       //是否顶部吸顶 （不知道有没有用）
       isRefreshTopSticky: true,
       // 不能写成箭头函数，有传参
-      headerRefreshLayout: this.refreshHeader,
-      footerLoadLayout: this.loadMoreFooter,
+      // headerRefreshLayout: this.refreshHeader,
+      // footerLoadLayout: this.loadMoreFooter,
       onRefresh: () => {
         this.childReactor.fetchData(true)
           .finally(() => {

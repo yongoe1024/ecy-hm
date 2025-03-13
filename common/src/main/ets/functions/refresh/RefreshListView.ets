@@ -54,13 +54,9 @@ export struct RefreshListView {
 
   /*   end    */
 
-  ss(){
-    console.log(JSON.stringify(this.pageState))
-  }
-
   aboutToAppear(): void {
     this.reactor.fetchDataBlock = this.fetchDataBlock
-    this.pageState = this.reactor.pageState
+    this.reactor.pageState = this.pageState
     //   如果嵌套
     if (this.isNest) {
       this.slideDisplayLoadData = false
@@ -97,7 +93,7 @@ export struct RefreshListView {
    */
   @Builder
   refreshHeader(status: RefreshLayoutStatusModel) {
-    LoadingProgress()
+    RefreshHeaderComponent({ status: status.status })
   }
 
   /**
@@ -105,14 +101,7 @@ export struct RefreshListView {
    */
   @Builder
   loadMoreFooter(status: LoadMoreLayoutStatusModel) {
-    if (status.status !== LoadMoreLayoutStatus.FooterNothing) {
-      LoadingProgress().width(80).height(80)
-    } else {
-      Text('没有更多了')
-        .fontColor('#999')
-        .fontSize(12)
-        .height(64)
-    }
+    LoadMoreFooterComponent({ status: status.status })
   }
 
   build() {
@@ -128,8 +117,8 @@ export struct RefreshListView {
       /*   以上是嵌套滚动   */
       // 不回弹，加载直接显示, 不知道好不好看，先注释
       // slideDisplayLoadData: true,
-      enableRefresh: this.enableRefresh,
-      enableLoadMore: this.enableLoadMore,
+      enableRefresh: this.enableRefresh && !this.pageState.isError,
+      enableLoadMore: this.enableLoadMore && !this.pageState.isError,
       lazyDataSource: this.reactor.dataSource,
       itemLayout: this.itemBuilder, //条目布局
       controller: this.reactor.refreshController, //控制器，负责关闭下拉和上拉
