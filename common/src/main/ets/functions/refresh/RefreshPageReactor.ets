@@ -6,8 +6,8 @@ import { BusinessError } from "@kit.BasicServicesKit";
  * 分页控制器
  */
 export class RefreshPageReactor {
-  //分页状态 最终传给RefreshListView
-  pageState: RefreshPageState
+  //分页状态 RefreshListView 穿过来的响应式
+  pageState: RefreshPageState = new RefreshPageState(1, 20)
   //分页刷新控制器
   refreshController: RefreshController = new RefreshController()
   //数据懒加载操作对象，执行数据CRUD
@@ -15,10 +15,9 @@ export class RefreshPageReactor {
   // 请求数据
   fetchDataBlock: FetchDataBlock = () => Promise.reject()
 
-  constructor(pageState: RefreshPageState = new RefreshPageState(1, 10)) {
+  constructor( ) {
     // 手动刷新
     this.refreshController.isAutoRefresh = false
-    this.pageState = pageState
   }
 
   /**
@@ -58,7 +57,6 @@ export class RefreshPageReactor {
         } else {
           this.pageState.hasMore = false
         }
-
       } else {
         this.pageState.hasMore = false
         this.pageState.isEmpty = false

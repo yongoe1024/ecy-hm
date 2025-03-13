@@ -9,6 +9,8 @@ import {
   RefreshLayoutStatusModel,
   RefreshPositionEnum
 } from '@abner/refresh';
+import { RefreshHeaderComponent } from "./RefreshHeaderComponent";
+import { LoadMoreFooterComponent } from "./LoadMoreFooterComponent";
 
 /**
  * 分页刷新组件
@@ -41,16 +43,14 @@ export struct RefreshListView {
    * 分页逻辑控制中心
    */
   reactor: RefreshPageReactor = new RefreshPageReactor()
-  @State @Watch('ss') pageState: RefreshPageState = new RefreshPageState(1, 10)
+  @State  pageState: RefreshPageState = new RefreshPageState(1, 20)
   /*  嵌套滚动专用   */
   @State isNest: boolean = false
   // 必传
   onListRefreshPosition: (position: RefreshPositionEnum) => void = () => {
   }
   @State listNestedScroll: NestedScrollOptions | undefined = undefined
-  @State prohibitRefresh: boolean | undefined = undefined
   @State isRefreshSticky: boolean | undefined = undefined
-  @State slideDisplayLoadData: boolean = true
 
   /*   end    */
 
@@ -59,12 +59,12 @@ export struct RefreshListView {
     this.reactor.pageState = this.pageState
     //   如果嵌套
     if (this.isNest) {
-      this.slideDisplayLoadData = false
       this.listNestedScroll = {
         scrollForward: NestedScrollMode.PARENT_FIRST,
         scrollBackward: NestedScrollMode.SELF_FIRST
       }
-      this.prohibitRefresh = true
+      this.enableRefresh=false
+      this.enableLoadMore=false
       this.isRefreshSticky = true
     }
   }
@@ -110,8 +110,6 @@ export struct RefreshListView {
       onListRefreshPosition: this.onListRefreshPosition,
       // 滑动事件优先级
       listNestedScroll: this.listNestedScroll,
-      // 嵌套必备，禁止自身刷新
-      prohibitRefresh: this.prohibitRefresh,
       // 嵌套必备，防止父元素下拉刷新意外出现
       isRefreshSticky: this.isRefreshSticky,
       /*   以上是嵌套滚动   */
@@ -128,6 +126,12 @@ export struct RefreshListView {
       showErrorLayout: this.pageState.isError, //是否显示加载
       // headerRefreshLayout: this.refreshHeader,
       // footerLoadLayout: this.loadMoreFooter,
+      // refreshHeaderAttribute: (attribute: RefreshHeaderAttr) => {
+      //   attribute.height = 118
+      // },
+      // loadMoreFooterAttribute: (attribute: LoadMoreFooterAttr) => {
+      //   attribute.height = 36
+      // },
       itemHeaderLayout: () => {
         this.headerBuilder()
       },

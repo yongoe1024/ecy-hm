@@ -8,24 +8,31 @@ import { BusinessError } from '@kit.BasicServicesKit'
  * INTRODUCE:任意组件之，使用RefreshLayout做吸顶组件
  * */
 
-@Entry
 @Component
-struct StickLayoutViewPage {
-  private refreshPageReactor: RefreshPageReactor = new RefreshPageReactor(new RefreshPageState(1, 20))
+export struct DemoXX {
+  refreshPageReactor: RefreshPageReactor = new RefreshPageReactor()
   controller: RefreshController = new RefreshController() //刷新控制器
   @State listPosition: RefreshPositionEnum = RefreshPositionEnum.TOP
+  parentReactor: RefreshController = new RefreshController()
 
   async get(pageState: RefreshPageState): Promise<PageModel> {
     return new Promise(async (resolve, reject) => {
       try {
         let a: string[] = []
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 20; i++) {
           a.push(i + '')
         }
+        // resolve(new PageModel(0, 1, 1, 1, []))
+        if(pageState.current==3){
+          reject({ code:500, message: ''} as BusinessError)
+        }else{
+          resolve(new PageModel(11111, 20, pageState.current, 11111, a))
+        }
+        // reject({ code:500, message: ''} as BusinessError)
         // 错误返回，此处code是返回的 code ，message没啥用
         // reject({ code: 500, message: '请求错误' } as BusinessError)
         // 正确返回，返回 BasePagingModel，后端缺字段无法对应，会导致错误
-        resolve(new PageModel(11111, 10, pageState.current, 11111, a))
+        // resolve(new PageModel(11111, 20, pageState.current, 11111, a))
       } catch (e) {
         // todo 此处异常看看axios
         reject({ code: e.code, message: e.message } as BusinessError)
@@ -54,7 +61,7 @@ struct StickLayoutViewPage {
         RefreshListView({
           // 必须设置 是否为嵌套
           isNest: true,
-          // 必须设置
+          // // 必须设置
           onListRefreshPosition: (refreshPosition: RefreshPositionEnum) => {
             this.listPosition = refreshPosition
           },
@@ -63,8 +70,6 @@ struct StickLayoutViewPage {
           fetchDataBlock: (pageState: RefreshPageState, isRefresh: boolean) => {
             return this.get(pageState)
           }
-        }).onAppear(() => {
-          this.refreshPageReactor.fetchData(true)
         })
           .height('calc(100% - 50vp)')
       }
@@ -86,6 +91,7 @@ struct StickLayoutViewPage {
       // 嵌套吸顶 Demo
       // 警告，一页必须超过一屏的高度，否则出bug
       RefreshParent({
+        parentReactor:this.parentReactor,
         childReactor: this.refreshPageReactor,
         listPosition: this.listPosition,
         itemLayout: () => {

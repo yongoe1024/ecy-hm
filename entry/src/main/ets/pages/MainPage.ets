@@ -5,6 +5,7 @@ import { MinePage } from "mine"
 import { router } from "@kit.ArkUI"
 import { locationManager } from "@kit.MDMKit"
 import { geoLocationManager } from "@kit.LocationKit"
+import { DemoXX } from "./DemoXX"
 
 @Builder
 export function MainPageBuilder() {
@@ -39,14 +40,15 @@ export struct MainPage {
       Tabs({ index: $$this.selectIndex }) {
 
         TabContent() {
-          Column() {
-            Text('页面')
-              .onClick(() => {
-                router.pushUrl({
-                  url: 'pages/DemoXX'
-                })
-              })
-          }
+          // Column() {
+          //   Text('页面')
+          //     .onClick(() => {
+          //       router.pushUrl({
+          //         url: 'pages/DemoXX'
+          //       })
+          //     })
+          // }
+          DemoXX()
         }
 
         TabContent() {

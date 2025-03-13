@@ -1,7 +1,8 @@
 import {
-  LoadMoreLayoutStatus,
+  LoadMoreFooterAttr,
   LoadMoreLayoutStatusModel,
   RefreshController,
+  RefreshHeaderAttr,
   RefreshLayout,
   RefreshLayoutStatusModel,
   RefreshPositionEnum
@@ -24,15 +25,17 @@ export struct RefreshParent {
   @State enableRefresh: boolean = true
   // 加载更多
   @State enableLoadMore: boolean = true
+  @State isError: boolean = false
+  @State isEmpty: boolean = false
 
+  aboutToAppear(): void {
+    this.parentReactor.isAutoRefresh = false
+  }
 
   @Builder
   nullBuilder() {
   }
 
-  /**
-   * column大头，不许有高度
-   */
   @BuilderParam
   itemLayout: () => void = this.nullBuilder
 
@@ -55,7 +58,7 @@ export struct RefreshParent {
   build() {
     RefreshLayout({
       enableRefresh: this.enableRefresh,
-      enableLoadMore: this.enableLoadMore,
+      enableLoadMore: this.enableLoadMore && !this.isError &&!this.isEmpty,
       itemLayout: this.itemLayout,
       // 不回弹，加载直接显示, 不知道好不好看，先注释
       // slideDisplayLoadData: false,
@@ -66,8 +69,22 @@ export struct RefreshParent {
       // 不能写成箭头函数，有传参
       // headerRefreshLayout: this.refreshHeader,
       // footerLoadLayout: this.loadMoreFooter,
+      // refreshHeaderAttribute: (attribute: RefreshHeaderAttr) => {
+      //   attribute.height = 118
+      // },
+      // loadMoreFooterAttribute: (attribute: LoadMoreFooterAttr) => {
+      //   attribute.height = 36
+      // },
       onRefresh: () => {
         this.childReactor.fetchData(true)
+          .then((page: RefreshPageState) => {
+            this.isError = page.isError
+            this.isEmpty = page.isEmpty
+          })
+          .catch((e: RefreshPageState) => {
+            this.isError = e.isError
+            this.isEmpty = e.isEmpty
+          })
           .finally(() => {
             this.parentReactor.finishRefresh()
           })
@@ -75,16 +92,36 @@ export struct RefreshParent {
       onLoadMore: () => {
         this.childReactor.fetchData(false)
           .then((page: RefreshPageState) => {
+            this.isError = page.isError
+            this.isEmpty = page.isEmpty
             if (page.hasMore) {
               this.parentReactor.finishLoadMore(false)
             } else {
               this.parentReactor.finishLoadMore(true)
             }
-          }).catch(() => {
-          this.parentReactor.finishLoadMore(true)
-        })
+          })
+          .catch((e: RefreshPageState) => {
+            this.isError = e.isError
+            this.isEmpty = e.isEmpty
+            this.parentReactor.finishLoadMore(true)
+          })
       }
     })
+      .onAppear(() => {
+        this.childReactor.fetchData(true)
+          .then((page: RefreshPageState) => {
+            this.isError = page.isError
+            this.isEmpty = page.isEmpty
+            if (page.hasMore) {
+              this.parentReactor.finishLoadMore(false)
+            } else {
+              this.parentReactor.finishLoadMore(true)
+            }
+          }).catch((e: RefreshPageState) => {
+          this.isError = e.isError
+          this.isEmpty = e.isEmpty
+        })
+      })
   }
 }
 
