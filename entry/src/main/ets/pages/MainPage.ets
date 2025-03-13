@@ -40,15 +40,14 @@ export struct MainPage {
       Tabs({ index: $$this.selectIndex }) {
 
         TabContent() {
-          // Column() {
-          //   Text('页面')
-          //     .onClick(() => {
-          //       router.pushUrl({
-          //         url: 'pages/DemoXX'
-          //       })
-          //     })
-          // }
-          DemoXX()
+          Column() {
+            Text('页面')
+              .onClick(() => {
+                router.pushUrl({
+                  url: 'pages/DemoXX'
+                })
+              })
+          }
         }
 
         TabContent() {

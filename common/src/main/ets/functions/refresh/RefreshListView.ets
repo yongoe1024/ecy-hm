@@ -44,29 +44,10 @@ export struct RefreshListView {
    */
   reactor: RefreshPageReactor = new RefreshPageReactor()
   @State  pageState: RefreshPageState = new RefreshPageState(1, 20)
-  /*  嵌套滚动专用   */
-  @State isNest: boolean = false
-  // 必传
-  onListRefreshPosition: (position: RefreshPositionEnum) => void = () => {
-  }
-  @State listNestedScroll: NestedScrollOptions | undefined = undefined
-  @State isRefreshSticky: boolean | undefined = undefined
-
-  /*   end    */
 
   aboutToAppear(): void {
     this.reactor.fetchDataBlock = this.fetchDataBlock
     this.reactor.pageState = this.pageState
-    //   如果嵌套
-    if (this.isNest) {
-      this.listNestedScroll = {
-        scrollForward: NestedScrollMode.PARENT_FIRST,
-        scrollBackward: NestedScrollMode.SELF_FIRST
-      }
-      this.enableRefresh=false
-      this.enableLoadMore=false
-      this.isRefreshSticky = true
-    }
   }
 
   @Builder
@@ -106,13 +87,6 @@ export struct RefreshListView {
 
   build() {
     ListView({
-      // 滚动位置，嵌套组件使用
-      onListRefreshPosition: this.onListRefreshPosition,
-      // 滑动事件优先级
-      listNestedScroll: this.listNestedScroll,
-      // 嵌套必备，防止父元素下拉刷新意外出现
-      isRefreshSticky: this.isRefreshSticky,
-      /*   以上是嵌套滚动   */
       // 不回弹，加载直接显示, 不知道好不好看，先注释
       // slideDisplayLoadData: true,
       enableRefresh: this.enableRefresh && !this.pageState.isError,

@@ -38,7 +38,6 @@ export * from './refresh/LoadingPage'
 export * from './refresh/RefreshListView'
 export * from './refresh/RefreshModel'
 export * from './refresh/RefreshPageReactor'
-export * from './refresh/RefreshParent'
 
 /**
  * 路由

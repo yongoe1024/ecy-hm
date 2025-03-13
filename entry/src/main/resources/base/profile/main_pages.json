@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/DemoMulti",
-    "pages/ListPage"
+    "pages/ListPage",
+    "pages/DemoXX"
   ]
 }
